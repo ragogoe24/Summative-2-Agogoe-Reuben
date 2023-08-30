@@ -34,12 +34,11 @@ public class BookControllerTests {
     @MockBean
     BookRepository bookRepository;
 
-    @BeforeEach
-    public void setUp() throws Exception {}
+    private Book book;
 
-    @Test
-    public void shouldCreateBook() throws Exception {
-        Book book = new Book(
+    @BeforeEach
+    public void setUp() {
+        book = new Book(
                 "12345",
                 LocalDate.of(2023,8,1),
                 1,
@@ -47,7 +46,10 @@ public class BookControllerTests {
                 1,
                 new BigDecimal("9.99")
         );
+    }
 
+    @Test
+    public void shouldCreateBook() throws Exception {
         String inputJson = mapper.writeValueAsString(book);
         mockMvc.perform(
                     post("/books")
@@ -80,15 +82,6 @@ public class BookControllerTests {
 
     @Test
     public void shouldUpdateBookById() throws Exception {
-        Book book = new Book(
-                "12345",
-                LocalDate.of(2023,8,1),
-                1,
-                "The Last of Us",
-                1,
-                new BigDecimal("9.99")
-        );
-
         String inputJson = mapper.writeValueAsString(book);
         mockMvc.perform(
                         put("/books/1")

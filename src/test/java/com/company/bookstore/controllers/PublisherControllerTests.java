@@ -29,12 +29,11 @@ public class PublisherControllerTests {
     @MockBean
     PublisherRepository publisherRepository;
 
-    @BeforeEach
-    public void setUp() {}
+    private Publisher publisher;
 
-    @Test
-    public void shouldCreatePublisher() throws Exception {
-        Publisher publisher = new Publisher(
+    @BeforeEach
+    public void setUp() {
+        publisher = new Publisher(
                 "Sony Interactive Entertainment",
                 "38th Street",
                 "Santa Monica",
@@ -44,6 +43,10 @@ public class PublisherControllerTests {
                 "sony@gmail.com"
         );
 
+    }
+
+    @Test
+    public void shouldCreatePublisher() throws Exception {
         String inputJson = mapper.writeValueAsString(publisher);
         mockMvc.perform(
                         post("/publishers")
@@ -76,16 +79,6 @@ public class PublisherControllerTests {
 
     @Test
     public void shouldUpdatePublisherById() throws Exception {
-        Publisher publisher = new Publisher(
-                "Sony Interactive Entertainment",
-                "38th Street",
-                "Santa Monica",
-                "CA",
-                "94088",
-                "222-222-2222",
-                "sony@gmail.com"
-        );
-
         String inputJson = mapper.writeValueAsString(publisher);
         mockMvc.perform(
                         put("/publishers/1")

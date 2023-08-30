@@ -30,12 +30,11 @@ public class AuthorControllerTests {
     @MockBean
     AuthorRepository authorRepository;
 
-    @BeforeEach
-    public void setUp() {}
+    private Author author;
 
-    @Test
-    public void shouldCreateAuthor() throws Exception {
-        Author author = new Author(
+    @BeforeEach
+    public void setUp() {
+        author = new Author(
                 "Naughty",
                 "Dog",
                 "34th Street",
@@ -45,7 +44,10 @@ public class AuthorControllerTests {
                 "111-111-1111",
                 "ndog@gmail.com"
         );
+    }
 
+    @Test
+    public void shouldCreateAuthor() throws Exception {
         String inputJson = mapper.writeValueAsString(author);
         mockMvc.perform(
                         post("/authors")
@@ -78,17 +80,6 @@ public class AuthorControllerTests {
 
     @Test
     public void shouldUpdateAuthorById() throws Exception {
-        Author author = new Author(
-                "Naughty",
-                "Dog",
-                "34th Street",
-                "San Jose",
-                "CA",
-                "94088",
-                "111-111-1111",
-                "ndog@gmail.com"
-        );
-
         String inputJson = mapper.writeValueAsString(author);
         mockMvc.perform(
                         put("/authors/1")
